@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/error17191/aflam-word-game-backend/issues"
   },
-  "homepage": "https://github.com/error17191/aflam-word-game-backend#readme"
+  "homepage": "https://github.com/error17191/aflam-word-game-backend#readme",
+  "dependencies": {
+    "socket.io": "^4.5.1",
+    "uuid": "^8.3.2"
+  }
 }
