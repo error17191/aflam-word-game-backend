@@ -1,15 +1,14 @@
 const http = require('http');
+const https = require('https');
+const express = require('express');
 const {Server} = require("socket.io");
 const {v4: uuidv4} = require('uuid');
 const {readFileSync} = require("fs");
-const env = require('./env')
-const {sslKey, sslPem} = require("./env");
+const env = require('./env');
+const {isSecure} = require("./env");
 
-
-const server = env.sslKey && env.sslPem ? http.createServer({
-    key: readFileSync(sslKey),
-    cert: readFileSync(sslPem)
-}) : http.createServer();
+const app = express();
+const server = createServer(app);
 
 const io = new Server(server, {
     cors: {
@@ -61,3 +60,15 @@ io.on('connection', (socket) => {
 server.listen(3000, () => {
     console.log('listening on *:3000');
 });
+
+
+function createServer(app) {
+    if (!isSecure) {
+        return http.createServer(app);
+    }
+
+    return https.createServer({
+        key: readFileSync(env.sslKey),
+        cert: readFileSync(env.sslPem)
+    }, app);
+}

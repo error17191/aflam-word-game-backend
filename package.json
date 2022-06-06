@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/error17191/aflam-word-game-backend#readme",
   "dependencies": {
+    "express": "^4.18.1",
     "socket.io": "^4.5.1",
     "uuid": "^8.3.2"
   }
