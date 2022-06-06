@@ -1,8 +1,15 @@
 const http = require('http');
 const {Server} = require("socket.io");
 const {v4: uuidv4} = require('uuid');
+const {readFileSync} = require("fs");
+const env = require('./env')
+const {sslKey, sslPem} = require("./env");
 
-const server = http.createServer();
+
+const server = env.sslKey && env.sslPem ? http.createServer({
+    key: readFileSync(sslKey),
+    cert: readFileSync(sslPem)
+}) : http.createServer();
 
 const io = new Server(server, {
     cors: {
